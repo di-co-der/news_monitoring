@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from news_monitoring.users import models as user_models
 
@@ -18,6 +19,11 @@ class Source(models.Model):
    # Unique constraint to ensure that company_id and url combination is unique
    class Meta:
        constraints = [
-           models.UniqueConstraint(fields=['company', 'url'], name='unique_company_url')
-           #check constraint-------------------
+           models.UniqueConstraint(fields=['company', 'url'], name='unique_company_url'),
+
+           # Check constraint to ensure URL starts with "http" or "https"
+           models.CheckConstraint(
+               check=Q(url__startswith="http"),
+               name="check_valid_url"
+           ),
        ]

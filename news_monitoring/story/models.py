@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from news_monitoring.users import models as user_models
 from news_monitoring.source import models as source_models
@@ -23,7 +24,12 @@ class Story(models.Model):
     # Unique constraint to ensure the combination of company_id and article_url is unique
     class Meta:
         constraints = [
-           models.UniqueConstraint(fields=['company', 'article_url'], name='unique_company_article_url')
+           models.UniqueConstraint(fields=['company', 'article_url'], name='unique_company_article_url'),
+
+            models.CheckConstraint(
+                check=Q(article_url__startswith="http"),
+                name="check_valid_article_url"
+            ),
         ]
 
     def __str__(self):
