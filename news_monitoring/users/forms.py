@@ -65,6 +65,7 @@ class UserSignupForm(SignupForm):
     def save(self, request):
         """Save user with email as username and associate with a company."""
         user = super().save(request)
+        user.username = user.email
         email = self.cleaned_data.get("email")
         company_name = self.cleaned_data.get("company_name")
         company_url = self.cleaned_data.get("company_url")

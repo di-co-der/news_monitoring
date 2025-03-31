@@ -7,7 +7,7 @@ class Source(models.Model):
    tagged_company = models.ManyToManyField(user_models.Company, related_name='tagged_sources', blank=True)
 
    company = models.ForeignKey(user_models.Company, on_delete=models.CASCADE, null=True,blank=True)
-   added_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='sources_added')
+   added_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='sources_added', default=1)
    updated_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='sources_updated', null=True, blank=True)
 
    name = models.CharField(max_length=255)

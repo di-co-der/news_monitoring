@@ -9,7 +9,7 @@ class Story(models.Model):
 
     company = models.ForeignKey(user_models.Company, on_delete=models.CASCADE, null=True, blank=True)
     source = models.ForeignKey(source_models.Source, on_delete=models.SET_NULL, null=True, blank=True)
-    added_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='stories_added')
+    added_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='stories_added', default=1)
     updated_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='stories_updated', null=True, blank=True)
 
     title = models.CharField(max_length=255, null=False, blank=False)

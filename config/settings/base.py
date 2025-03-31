@@ -295,3 +295,11 @@ SOCIALACCOUNT_FORMS = {"signup": "news_monitoring.users.forms.UserSocialSignupFo
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+# Define authentication methods
+ACCOUNT_LOGIN_METHODS = {"email"}  # Use email as the only login method
+
+# Define required signup fields (with "*" indicating required fields)
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]  # Remove "username*"
+
+# Ensure the email is unique
+ACCOUNT_UNIQUE_EMAIL = True

@@ -1,8 +1,30 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models import CharField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+
+class CustomUserManager(BaseUserManager):
+    """Custom manager where email is the unique identifier for authentication."""
+
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and return a regular user with an email instead of a username."""
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        extra_fields.setdefault("is_active", True)
+        user = self.model(username=email, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        """Create and return a superuser with an email."""
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -16,6 +38,9 @@ class User(AbstractUser):
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore[assignment]
     last_name = None  # type: ignore[assignment]
+    username = models.EmailField(unique=True)
+
+    objects = CustomUserManager()  # Assign custom manager, company
 
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
