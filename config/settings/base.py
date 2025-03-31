@@ -278,13 +278,13 @@ REDIS_SSL = REDIS_URL.startswith("rediss://")
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_LOGIN_METHODS = {"username"}
+ACCOUNT_LOGIN_METHODS = {"email"}
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "none"
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_ADAPTER = "news_monitoring.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "news_monitoring.users.adapters.CustomAccountAdapter"
 # https://docs.allauth.org/en/latest/account/forms.html
 ACCOUNT_FORMS = {"signup": "news_monitoring.users.forms.UserSignupForm"}
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
@@ -295,11 +295,6 @@ SOCIALACCOUNT_FORMS = {"signup": "news_monitoring.users.forms.UserSocialSignupFo
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-# Define authentication methods
-ACCOUNT_LOGIN_METHODS = {"email"}  # Use email as the only login method
-
-# Define required signup fields (with "*" indicating required fields)
-ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]  # Remove "username*"
 
 # Ensure the email is unique
 ACCOUNT_UNIQUE_EMAIL = True

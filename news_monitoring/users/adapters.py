@@ -5,12 +5,30 @@ import typing
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.conf import settings
+from django.shortcuts import resolve_url
+
+from news_monitoring.source.models import Source
 
 if typing.TYPE_CHECKING:
     from allauth.socialaccount.models import SocialLogin
     from django.http import HttpRequest
 
     from news_monitoring.users.models import User
+
+
+class CustomAccountAdapter(DefaultAccountAdapter):
+    def get_login_redirect_url(self, request):
+        """
+        Redirect users based on source availability.
+        """
+        user = request.user
+        if user.is_staff:
+            return resolve_url("source_list")  # Staff goes to source list
+
+        # Check if the user has any sources
+        has_sources = Source.objects.filter(added_by=user).exists()
+        return resolve_url("source:add_source" if not has_sources else "source:source_list")
+
 
 
 class AccountAdapter(DefaultAccountAdapter):
