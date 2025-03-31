@@ -48,10 +48,15 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres:///news_monitoring",
-    ),
+    'default': {  # Name of your new database connection
+        'ENGINE': 'django.db.backends.postgresql',  # Or the appropriate engine (e.g., mysql, sqlite)
+        'NAME': 'news_monitoring',  # Name of database
+        'USER': 'postgres',  # User for database
+        'PASSWORD': 'postgres',  # Password for database
+        'HOST': 'localhost',  # Or the host of the database
+        'PORT': '5432',  # Port for the database (if different)
+        # Add any other database-specific settings here, like 'OPTIONS' or 'TEST'
+    },
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -88,6 +93,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "news_monitoring.users",
+    "news_monitoring.source",
+    "news_monitoring.story",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

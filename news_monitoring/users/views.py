@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import QuerySet
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
@@ -8,7 +10,7 @@ from django.views.generic import RedirectView
 from django.views.generic import UpdateView
 
 from news_monitoring.users.models import User
-
+from news_monitoring.users import services
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
@@ -44,3 +46,15 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 user_redirect_view = UserRedirectView.as_view()
+
+
+@login_required
+def add_company(request):
+    """Renders the Add Company form and delegates logic to services."""
+    if request.method == "POST":
+        success, data_or_error = services.process_company_form(request)
+        if success:
+            return redirect('add_source')
+        return render(request, 'pages/add_company.html', data_or_error)
+
+    return render(request, 'pages/add_company.html', {})

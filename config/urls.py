@@ -18,6 +18,8 @@ urlpatterns = [
     # User management
     path("users/", include("news_monitoring.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("story/", include("story.urls", namespace="story")),
+    path("source/", include("source.urls", namespace="source")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files

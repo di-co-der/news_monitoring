@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Company{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add a New Company</h2>
+
+    {% if error_message %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Company Name:</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ name|default_if_none:'' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="company_url" class="form-label">Company URL:</label>
+            <input type="url" id="company_url" name="company_url" class="form-control" value="{{ company_url|default_if_none:'' }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Company</button>
+        <a href="{% url 'add_source' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

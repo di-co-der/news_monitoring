@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
+from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -24,3 +25,23 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"username": self.username})
+
+
+class Company(models.Model):
+    """
+    A company that users belong to.
+    """
+    added_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="companies_added"
+    )
+    updated_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="companies_updated", null=True, blank=True
+    )
+
+    name = models.CharField(max_length=255, null=False, blank=False)
+    company_url = models.URLField(unique=True, null=False, blank=False)
+    added_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Story{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{% if is_edit %}Edit{% else %}Add{% endif %} Story</h2>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="{{ story.title|default:'' }}" required>
+
+        <label for="content">Content</label>
+        <textarea name="content" id="content" required>{{ story.content|default:'' }}</textarea>
+
+        <button type="submit" class="btn">Save Story</button>
+        <a href="{% url 'story_list' %}" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+{% endblock %}

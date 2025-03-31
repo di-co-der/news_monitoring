@@ -11,3 +11,52 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+.home-container {
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.home-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.home-container p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #ff4757;
+}
+
+.btn-secondary {
+    background-color: #1e90ff;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    opacity: 0.8;
+}
