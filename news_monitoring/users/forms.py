@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
+from allauth.account.views import SignupView
 
 from .models import User, Company
 
@@ -37,16 +38,18 @@ class UserSignupForm(SignupForm):
         label="Email",
         widget=forms.EmailInput(),
     )
-    company_name = forms.CharField(
+    company_name = forms.ModelChoiceField(
         label="Company Name",
-        widget=forms.TextInput(),
+        queryset=Company.objects.all(),
+        empty_label="Select a Company",
         required=True  # Ensure this field is required
     )
-    company_url = forms.URLField(
-        label="Company URL",
-        widget=forms.URLInput(),
-        required=True
-    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the username field if it exists
+        if 'username' in self.fields:
+            del self.fields['username']
 
     def clean_email(self):
         """Ensure email is unique since it's used as username."""
@@ -55,33 +58,18 @@ class UserSignupForm(SignupForm):
             raise forms.ValidationError("This email is already in use.")
         return email
 
-    def clean_company_name(self):
-        """Ensure the company exists in the database before proceeding."""
-        company_name = self.cleaned_data.get("company_name")
-        if not Company.objects.filter(name=company_name).exists():
-            raise forms.ValidationError("This company is not registered.")
-        return company_name
-
     def save(self, request):
         """Save user with email as username and associate with a company."""
         user = super().save(request)
-        user.username = user.email
         email = self.cleaned_data.get("email")
         company_name = self.cleaned_data.get("company_name")
-        company_url = self.cleaned_data.get("company_url")
 
         # Set email as username
         user.username = email
+        user.email = email
+        user.company = company_name
         user.save()
 
-        # Ensure company exists or create one
-        company, created = Company.objects.get_or_create(
-            name=company_name,
-            defaults={"company_url": company_url}
-        )
-
-        user.company = company
-        user.save()
         return user
 
 class UserSocialSignupForm(SocialSignupForm):

@@ -12,7 +12,7 @@ class Source(models.Model):
    updated_by = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='sources_updated', null=True, blank=True)
 
    name = models.CharField(max_length=255)
-   url = models.URLField(unique=True, null=False, blank=False)
+   url = models.URLField(unique=True, null=False, blank=False, max_length=500)
    added_on = models.DateTimeField(auto_now_add=True)
    updated_on = models.DateTimeField(auto_now=True)
 

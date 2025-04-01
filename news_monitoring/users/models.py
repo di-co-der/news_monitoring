@@ -39,7 +39,7 @@ class User(AbstractUser):
     first_name = None  # type: ignore[assignment]
     last_name = None  # type: ignore[assignment]
     username = models.EmailField(unique=True)
-
+    company = models.ForeignKey('Company', on_delete=models.CASCADE, null=True, blank=True)
     objects = CustomUserManager()  # Assign custom manager, company
 
     def get_absolute_url(self) -> str:

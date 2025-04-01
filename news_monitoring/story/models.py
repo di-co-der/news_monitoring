@@ -15,7 +15,7 @@ class Story(models.Model):
 
     title = models.CharField(max_length=255, null=False, blank=False)
     body_text = models.TextField(null=False, blank=False)
-    article_url = models.URLField(null=False, blank=False)
+    article_url = models.URLField(null=False, blank=False, max_length=500)
 
     published_date = models.DateTimeField(null=True, blank=True)
     added_on = models.DateTimeField(auto_now_add=True)

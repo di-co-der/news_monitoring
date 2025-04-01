@@ -14,7 +14,7 @@ def source_form(request, source_id=None):
         messages.error(request, error)
     elif request.method == "POST":
         messages.success(request, f"Source {'updated' if is_edit else 'added'} successfully!")
-        return redirect("source_list")
+        return redirect("source:source_list")
 
     return render(request, "source/add_source.html", {
         "source": source,
@@ -34,7 +34,7 @@ def source_list(request):
 
     # Redirect if user has no sources and is not a staff member
     if not request.user.is_staff and sources.count() == 0:
-        return redirect('add_source')  # Redirect to the Add Source page
+        return redirect('source:add_source')  # Redirect to the Add Source page
 
     return render(request, 'source/source_list.html', {'sources': sources})
 
@@ -42,4 +42,4 @@ def source_list(request):
 def delete_source(request, source_id):
     source = get_object_or_404(source_models.Source, id=source_id)
     source.delete()
-    return redirect('source_list')
+    return redirect('source:source_list')

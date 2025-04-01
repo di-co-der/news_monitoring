@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Story{% endblock %}
+{% block title %}{% if is_edit %}Edit{% else %}Add{% endif %} Story{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,16 +10,40 @@
         <p class="error">{{ error_message }}</p>
     {% endif %}
 
-    <form method="post">
+    <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" value="{{ story.title|default:'' }}" required>
 
-        <label for="content">Content</label>
-        <textarea name="content" id="content" required>{{ story.content|default:'' }}</textarea>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ story.title|default:'' }}" required>
+        </div>
 
-        <button type="submit" class="btn">Save Story</button>
-        <a href="{% url 'story_list' %}" class="btn-cancel">Cancel</a>
+        <div class="mb-3">
+            <label for="body_text" class="form-label">Body Text</label>
+            <textarea name="body_text" id="body_text" class="form-control" required>{{ story.body_text|default:'' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="article_url" class="form-label">Article URL</label>
+            <input type="url" name="article_url" id="article_url" class="form-control" value="{{ story.article_url|default:'' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="published_date" class="form-label">Published Date</label>
+            <input type="datetime-local" name="published_date" id="published_date" class="form-control" value="{{ story.published_date|date:'Y-m-d\TH:i'|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="tagged_company" class="form-label">Tagged Companies</label>
+            <select id="tagged_company" name="tagged_company" class="form-select" multiple>
+                {% for company in companies %}
+                    <option value="{{ company.id }}" {% if company.id in selected_companies %}selected{% endif %}>{{ company.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Story</button>
+        <a href="{% url 'story:story_list' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 {% endblock %}

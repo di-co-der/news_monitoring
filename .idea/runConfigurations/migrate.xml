@@ -1,6 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="migrate" type="Python.DjangoServer" factoryName="Django server" singleton="true">
     <module name="news_monitoring" />
+    <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
@@ -20,13 +21,14 @@
       </option>
     </PathMappingSettings>
     <option name="launchJavascriptDebuger" value="false" />
-    <option name="host" value="" />
+    <option name="port" value="8000" />
+    <option name="host" value="1127.0.0.1" />
     <option name="additionalOptions" value="" />
     <option name="browserUrl" value="" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
     <option name="customRunCommand" value="migrate" />
-    <method />
+    <method v="2" />
   </configuration>
 </component>

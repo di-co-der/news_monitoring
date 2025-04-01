@@ -26,7 +26,7 @@
 <!-- Your stuff: Third-party CSS libraries go here -->
 <!-- This file stores project-specific CSS -->
 
-  
+
   <link href="{% static 'css/project.css' %}" rel="stylesheet" />
 
 
@@ -48,7 +48,7 @@
 
 <!-- place project specific Javascript in this file -->
 
-  
+
   <script defer src="{% static 'js/project.js' %}"></script>
 
 
@@ -81,6 +81,18 @@
               <li class="nav-item">
                 <a class="nav-link"
                    href="{% url 'users:detail' request.user.username %}">{% translate "My Profile" %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'source:add_source' %}">{% translate "Add New Source" %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'source:source_list' %}">{% translate "View Sources" %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'story:add_story' %}">{% translate "Add New Story" %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'story:story_list' %}">{% translate "View Stories" %}</a>
               </li>
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}

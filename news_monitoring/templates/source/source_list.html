@@ -22,8 +22,8 @@
                     <td><a href="{{ source.url }}" target="_blank">{{ source.url }}</a></td>
                     <td>{{ source.story_set.count }}</td>
                     <td>
-                        <a href="{% url 'edit_source' source.id %}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{% url 'delete_source' source.id %}" class="btn btn-danger btn-sm" onclick="return confirmDelete(event);">Delete</a>
+                        <a href="{% url 'source:edit_source' source.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'source:delete_source' source.id %}" class="btn btn-danger btn-sm" onclick="return confirmDelete(event);">Delete</a>
                     </td>
                 </tr>
             {% empty %}
@@ -35,8 +35,8 @@
     </table>
 
     <div class="d-flex gap-2 mt-3">
-        <a href="{% url 'add_source' %}" class="btn btn-primary">Add New Source</a>
-        <a href="{% url 'story_list' %}" class="btn btn-secondary">View Stories</a>
+        <a href="{% url 'source:add_source' %}" class="btn btn-primary">Add New Source</a>
+        <a href="{% url 'story:story_list' %}" class="btn btn-secondary">View Stories</a>
     </div>
 </div>
 
